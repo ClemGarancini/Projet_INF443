@@ -3,6 +3,7 @@
 #include "road.hpp"
 #include "terrain.hpp"
 #include "Mesh_drawable_multitexture/mesh_drawable_multitexture.hpp"
+#include "bench.hpp"
 #include <cmath>
 
 using namespace cgp;
@@ -62,6 +63,7 @@ void scene_structure::initialize()
 	
 	terrain_mesh = create_terrain_mesh();
 	terrain_drawable.initialize(terrain_mesh, "terrain");
+    terrain_drawable.transform.translation = {0,-0.227f,0};
 	update_terrain(terrain_mesh, terrain_drawable, parameters);
 
 	//plane.initialize(mesh_primitive_quadrangle({ -20,0,-20 }, { 20,0,-20 },{20,0,20},{-20,0,20}), "Plane");
@@ -69,15 +71,24 @@ void scene_structure::initialize()
 	// House
 	// ***************************************** //
 
-	house = create_house(vec3{5,0.35f,0});
+    house = create_house(vec3{0,0.35f,0});
 
 	// Road
 	// ***************************************** //
 	mesh road_mesh = create_road_mesh(std::vector<vec3>{ vec3{ -1,0,-1 }, vec3{ 0,0,0 }, vec3{ 1,0,1 }, vec3{ 1,0,2 }, vec3{ 2,0,2 }, vec3{ 3,0,3 }}, 15, 0.1f);
 	road_drawable.initialize(road_mesh, "Road");
-	road_drawable.texture = opengl_load_texture_image("textures/Cobblestone.jpg", GL_REPEAT, GL_REPEAT);
+    //road_drawable.texture = opengl_load_texture_image("textures/Cobblestone.jpg", GL_REPEAT, GL_REPEAT);
 	GLuint const shader = opengl_load_shader("shaders/multitexture/vert.glsl", "shaders/multitexture/frag.glsl");
 	road_drawable.shader = shader;
+
+
+
+
+    mesh bench_mesh = create_bench();
+    bench_drawable.initialize(bench_mesh,"Bench");
+    bench_drawable.transform.scaling = 0.0015f; bench_drawable.transform.rotation = rotation_transform::from_axis_angle({1,0,0},-Pi/2);
+    bench_drawable.transform.translation = {-0.784f,0.103f,0.804f};
+
 	/*test.initialize(mesh_primitive_quadrangle());
 	test.texture = opengl_load_texture_image("textures/805197.jpg", GL_REPEAT, GL_REPEAT);*/
 }
@@ -98,15 +109,20 @@ void scene_structure::display()
 	//std::cout << "before" << std::endl;
 	house.update_local_to_global_coordinates();
 
-	draw(house, environment);
-	draw(terrain_drawable, environment);
-	draw(road_drawable, environment);
+    //draw(house, environment);
+    draw(terrain_drawable, environment);
+    //draw(road_drawable, environment);
+    draw(bench_drawable,environment);
 
 	if (gui.display_wireframe) {
 		draw_wireframe(plane, environment);
 		draw_wireframe(house, environment);
 		draw_wireframe(terrain_drawable, environment);
+        draw_wireframe(bench_drawable,environment);
 	}
+    if (gui.display_frame) {
+        draw(global_frame,environment);
+    }
 
 
 
@@ -129,6 +145,9 @@ void scene_structure::display()
 void scene_structure::display_gui()
 {
 	ImGui::Checkbox("Wireframe", &gui.display_wireframe);
+    ImGui::Checkbox("Frame",&gui.display_frame);
+    //ImGui::SliderFloat("x",&terrain_drawable.transform.translation.y,-1.0f,1.0f);
+
 }
 
 

@@ -10,6 +10,7 @@ using namespace cgp;
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_wireframe  = false;
+    bool display_frame = false;
 };
 
 
@@ -30,6 +31,8 @@ struct scene_structure {
 	cgp::timer_basic timer;
 	cgp::mesh_drawable plane;
 	hierarchy_mesh_drawable house;
+    mesh_drawable bench_drawable;
+
 
 	mesh terrain_mesh;
 	mesh_drawable terrain_drawable;
@@ -38,6 +41,7 @@ struct scene_structure {
 	perlin_noise_parameters parameters;
 	mesh_drawable test;
 
+    float bench_x,bench_y,bench_z;
 
 
 
