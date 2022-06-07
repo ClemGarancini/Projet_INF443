@@ -81,7 +81,7 @@ void scene_structure::initialize()
 
 	// Road
 	// ***************************************** //
-	mesh road_mesh = create_road_mesh(std::vector<vec3>{ vec3{ -1,0,-1 }, vec3{ 0,0,0 }, vec3{ 1,0,1 }, vec3{ 1,0,2 }, vec3{ 2,0,2 }, vec3{ 3,0,3 }}, 15, 0.1f);
+	mesh road_mesh = create_road_mesh(std::vector<vec3>{ vec3{ -11,0.1f,-11 }, vec3{ -10,0.1f,-10 }, vec3{ -2,0.1f,0 }, vec3{2 ,0.1f,-6 }, vec3{ 7,0.1f,3 }, vec3{ 0,0.1f,9 }, vec3{ -10,0.1f,5 }, vec3{ -11,0.1f,4 }}, 15, 0.1f);
 	road_drawable.initialize(road_mesh, "Road");
     //road_drawable.texture = opengl_load_texture_image("textures/Cobblestone.jpg", GL_REPEAT, GL_REPEAT);
 	GLuint const shader = opengl_load_shader("shaders/multitexture/vert.glsl", "shaders/multitexture/frag.glsl");
