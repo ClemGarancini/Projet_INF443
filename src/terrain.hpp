@@ -10,6 +10,7 @@ struct perlin_noise_parameters
 	float terrain_height = 0.29f;
 };
 
+float get_terrain_height(float x, float y,cgp::mesh terrain);
 
 // Initialize the mesh of the terrain
 cgp::mesh create_terrain_mesh();

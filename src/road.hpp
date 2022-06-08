@@ -4,5 +4,5 @@
 
 using namespace cgp;
 
-mesh create_road_mesh(std::vector<vec3> points, int N_samples_per_point, float offset = 0.5f);
+mesh create_road_mesh(std::vector<vec3> points, int N_samples_per_point, float offset,mesh terrain);
 

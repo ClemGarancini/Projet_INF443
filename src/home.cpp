@@ -4,7 +4,7 @@
 using namespace cgp;
 
 
-hierarchy_mesh_drawable create_house(vec3 center) {
+hierarchy_mesh_drawable create_house(vec3 center,float rotation) {
 	hierarchy_mesh_drawable house;
 
 	mesh walls_mesh = create_walls();
@@ -60,7 +60,7 @@ hierarchy_mesh_drawable create_house(vec3 center) {
         house.add(windows_drawable[i+3], "House");
 	}
 
-
+    //house["House"].transform.rotation = rotation_transform::from_axis_angle({0,1,0},rotation);
 	return house;
 }
 

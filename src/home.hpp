@@ -4,7 +4,7 @@
 using namespace cgp;
 
 
-hierarchy_mesh_drawable create_house(vec3 center);
+hierarchy_mesh_drawable create_house(vec3 center,float rotation);
 
 mesh create_walls( vec3 center = {0,0,0});
 mesh create_door(float ray_maj, float ray_min);

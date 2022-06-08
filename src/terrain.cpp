@@ -6,8 +6,16 @@ using namespace cgp;
 mesh create_terrain_mesh()
 {
 	int const terrain_sample = 180;
-	mesh terrain = mesh_primitive_grid({ -10,0,-10 }, { 10,0,-10 }, { 10,0,10 }, { -10,0,10 },terrain_sample,terrain_sample);
+    mesh terrain = mesh_primitive_grid({ -5,0,-5 }, { 5,0,-5 }, { 5,0,5 }, { -5,0,5 },terrain_sample,terrain_sample);
 	return terrain;
+}
+
+float get_terrain_height(float x, float y,mesh terrain){
+    int const N = std::sqrt(terrain.position.size());
+    float u = (x+5)/10;
+    float v = (y+5)/10;
+    int const idx = N*(u*N+v);
+    return terrain.position[idx].y;
 }
 
 void update_terrain(mesh& terrain, mesh_drawable& terrain_visual, perlin_noise_parameters const& parameters)
@@ -32,7 +40,7 @@ void update_terrain(mesh& terrain, mesh_drawable& terrain_visual, perlin_noise_p
 			terrain.position[idx].y = parameters.terrain_height*noise;
 
 			// use also the noise as color value
-			terrain.color[idx] = 0.3f*normalize(vec3(54,69,79))+0.7f*noise*vec3(1,1,1);
+            terrain.color[idx] = {0,0,0};//0.001f*normalize(vec3(54,69,79))+0.7f*noise*vec3(1,1,1);
 		}
 	}
 

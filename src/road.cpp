@@ -3,10 +3,12 @@
 #include <iostream>
 #include "Spline curves/key_positions_structure.hpp"
 #include "Spline curves/interpolation.hpp"
+#include "terrain.hpp"
+
 
 using namespace cgp;
 
-mesh create_road_mesh(std::vector<vec3> points,int N_samples_per_point,float offset) {
+mesh create_road_mesh(std::vector<vec3> points,int N_samples_per_point,float offset,mesh terrain) {
 	mesh road;
 
 	int N_samples_tot = N_samples_per_point * (points.size()-3);
@@ -18,6 +20,8 @@ mesh create_road_mesh(std::vector<vec3> points,int N_samples_per_point,float off
 	vec3 curr_path = normalize(points[2]-points[0]);
 	vec3 interpol_left = curr_interpol + offset * vec3{ -curr_path.z,curr_path.y,curr_path.x };
 	vec3 interpol_right = curr_interpol + offset * vec3{ curr_path.z,curr_path.y,-curr_path.x };
+    interpol_left.y = get_terrain_height(interpol_left.x,interpol_left.z,terrain);
+    interpol_right.y = get_terrain_height(interpol_right.x,interpol_right.z,terrain);
 	road.position[0] = interpol_left;
 	road.position[1] = interpol_right;
 
